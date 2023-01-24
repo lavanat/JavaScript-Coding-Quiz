@@ -8,25 +8,44 @@
   </head>
   <body>
     <header>
-      <h1 class= "title">JavaScript Fundamentals Quiz</h1>
-      <button class="start-button">Start</button>
+      <h1>JavaScript Fundamentals Quiz</h1>
+      <button id="start-button">Start</button>
     </header>
 
     <main>
-     <section class="high-scores-container">
+
+     <section id="high-scores-container">
         <button>View High Scores</button>
-        <ul class="high-scores-list">
+        <ul id="high-scores-list">
             <!-- This section will contain a running list of high scores -->
         </ul>
      </section>
-    <section class="question-container">
-        <p>placeholder</p>
-        <!--This will be populated by the question and answers from JS  -->
+
+     <div id="center-content">
+      <p id="info">
+        In this quiz, you will be presented with multiple choice questions.
+        Try to choose the correct answer within the time limit.
+        Choosing an incorrect answer will deduct 10 seconds from the timer.
+        Click the start button to begin! 
+      </p>
+
+      <section id="question-container">
+          <h2 id="question">Question</h2>
+          <div id="answer-container">
+            <button id="answer1">1</button>
+            <button id="answer2">2</button>
+            <button id="answer3">3</button>
+            <button id="answer4">4</button>
+          </div>
+      </section>
+    </div>
+
+     <section id="timer-container">
+        <div id="timer-text">
+            Time Remaining: <span id=countdown>60</span> seconds
+        </div>
      </section>
-     <section class="timer-container">
-        <div class="timer-text">
-            Time: <span class=countdown>60</span> seconds</div>
-     </section>
+
     </main>
     <script src="./script.js"></script>
   </body>

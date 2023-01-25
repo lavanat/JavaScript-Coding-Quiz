@@ -15,7 +15,7 @@
     <main>
 
      <section id="high-scores-container">
-        <button>View High Scores</button>
+        <button id="high-score-button">View High Scores</button>
         <ul id="high-scores-list">
             <!-- This section will contain a running list of high scores -->
         </ul>
@@ -37,6 +37,13 @@
             <button id="answer3">3</button>
             <button id="answer4">4</button>
           </div>
+      </section>
+
+      <section id="win-text">
+        <p>"Congratulations! You have successfully completed the quiz! Enter your initials below to save your score."</p>
+        <p>Your Score: <span id=score></span></p>
+        Initials: <input type="text" id="initials">
+        <button id="submit"> Submit </button>
       </section>
     </div>
 

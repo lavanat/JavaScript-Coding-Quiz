@@ -1,14 +1,22 @@
 // Get all of the HTML elements
 var startButton = document.getElementById("start-button");
 var highScoresListEl = document.getElementById("high-scores-list");
-var questioncontainer = document.getElementById("question-container");
+var highScoresButton = document.getElementById("high-score-button")
 var infoEl = document.getElementById("info");
+var timerEl = document.getElementById("countdown");
+
+var questioncontainer = document.getElementById("question-container");
 var questionEl = document.getElementById("question");
 var answer1El = document.getElementById("answer1");
 var answer2El = document.getElementById("answer2");
 var answer3El = document.getElementById("answer3");
 var answer4El = document.getElementById("answer4");
-var timerEl = document.getElementById("countdown");
+
+var wincontainer = document.getElementById("win-text");
+var scoreEl = document.getElementById("score");
+var initialEl = document.getElementById("initials");
+var submitButton = document.getElementById("submit")
+
 
 // Create the Questions
 let question1 = {
@@ -71,26 +79,30 @@ let question9 = {
 // Create new variables
 var timer;
 var quizQuestions = [question1, question2, question3, question4, question5, question6, question7, question8, question9];
-var answerEls = [answer1El, answer2El, answer3El, answer4El];
 var timerCount = 60;
-var highScoreslist;
-var userinitials;
+var highScoresList=[];
+var userInitials;
 var nextQuestion = 0;
 var message;
-var userAnswer;
 var score;
+var storedHighScores;
 
 function init () {
     infoEl.style.display = "flex";
     questioncontainer.style.display = "none";
+    wincontainer.style.display = "none";
+    highScoresListEl.style.display = "none"
 }
 
 function startQuiz () {
     infoEl.style.display = "none";
     startButton.style.display = "none";
     questioncontainer.style.display = "flex";
+    highScoresListEl.style.display = "none";
+    nextQuestion = 0;
+    submitButton.disabled = false;
     startTimer ();
-    getQuestion (nextQuestion);
+    getQuestion ();
 }
 
 function startTimer () {
@@ -98,12 +110,16 @@ function startTimer () {
         if (timerCount >0) {
             timerCount --;
             timerEl.textContent = timerCount;
+        } else {
+            clearInterval(timer);
+            timerCount = 0;
+            timerEl.textContent = timerCount;
+            displayLoss ();
         }
-        // add logic to display loss if time runs out
     }, 1000);
 }
 
-function getQuestion (nextQuestion) {
+function getQuestion () {
         questionEl.textContent = quizQuestions[nextQuestion].title;
         answer1El.textContent = quizQuestions[nextQuestion].answers[0];
         answer2El.textContent = quizQuestions[nextQuestion].answers[1];
@@ -112,7 +128,7 @@ function getQuestion (nextQuestion) {
     }
 
 function checkAnswer () {
-     userAnswer = this.id;
+     var userAnswer = this.id;
     //  check if the answer is right or wrong
      if (quizQuestions[nextQuestion].correct === userAnswer) {
         message = "Correct Answer!";
@@ -123,37 +139,67 @@ function checkAnswer () {
     //  go to high scores if this is the last question and there is time remaining
      if ((nextQuestion === 8) && (timerCount > 0)) {
         score = timerCount;
-        displayScore (score);
+        displayScoreText ();
         clearInterval(timer);
-     } else if (timerCount <= 0) {
-        timerCount = 0;
-        timerEl.textContent = timerCount;
-        displayLoss ();
      } else {
      nextQuestion++;
-     getQuestion(nextQuestion);
+     getQuestion();
      infoEl.textContent = message;
      infoEl.style.display = "flex";
      }
  }
 
- function displayScore (score) {
-    message = "Congratulations! You have successfully completed the quiz! Enter your initials below to save your score. Your score is: "
-    infoEl.textContent = message + score;
+ function displayScoreText () {
+    infoEl.style.display = "none";
     questioncontainer.style.display = "none";
-    // add code to get user initials
-    // save score and initials to local storage
-    // update high scores list with running total
-
+    wincontainer.style.display = "flex";
+    scoreEl.textContent = score;
+    submitButton.addEventListener("click", saveScore)
  }
 
+ function saveScore () {
+    submitButton.disabled = true;
+    userInitials = initialEl.value;
+    highScoresList.push(userInitials + "- " + score);
+    localStorage.setItem("highScoresList", JSON.stringify(highScoresList));
+    wincontainer.style.display = "none";
+    startButton.style.display = "flex";
+    showHighScoresList ();
+    initialEl.value = "";
+    timerCount = 60;
+    infoEl.textContent = "Hit start if you want to play again!"
+    infoEl.style.display = "flex";
+ };
+
  function displayLoss () {
-    message = "You did not complete the questions in time! Do you want to play again?"
+    message = "You did not complete the questions in time! Hit start if you want to play again!"
     infoEl.textContent = message;
     questioncontainer.style.display = "none";
     startButton.style.display = "flex";
     clearInterval(timer);
     timerCount = 60;
+ };
+
+ function showHighScoresList () {
+    if (highScoresListEl.style.display === "flex") {
+        highScoresListEl.style.display = "none"
+    } else {
+    highScoresListEl.style.display = "flex"
+    highScoresListEl.textContent = ""
+    storedHighScores = JSON.parse(localStorage.getItem("highScoresList"));
+    if (storedHighScores !== null) {
+        highScoresList = storedHighScores;
+      }
+    for (var i = 0; i < highScoresList.length; i++) {
+        var highScore = highScoresList[i];
+    
+        var li = document.createElement("li");
+        li.textContent = highScore;
+        li.setAttribute("data-index", i);
+    
+        highScoresListEl.appendChild(li);
+      } 
+    }
  }
 
  init ();
@@ -162,3 +208,4 @@ answer1El.addEventListener("click", checkAnswer);
 answer2El.addEventListener("click", checkAnswer);
 answer3El.addEventListener("click", checkAnswer);
 answer4El.addEventListener("click", checkAnswer);
+highScoresButton.addEventListener("click", showHighScoresList);

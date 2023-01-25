@@ -114,7 +114,8 @@ function startTimer () {
             clearInterval(timer);
             timerCount = 0;
             timerEl.textContent = timerCount;
-            displayLoss ();
+            score = 0;
+            displayScoreText ();
         }
     }, 1000);
 }
@@ -169,15 +170,6 @@ function checkAnswer () {
     timerCount = 60;
     infoEl.textContent = "Hit start if you want to play again!"
     infoEl.style.display = "flex";
- };
-
- function displayLoss () {
-    message = "You did not complete the questions in time! Hit start if you want to play again!"
-    infoEl.textContent = message;
-    questioncontainer.style.display = "none";
-    startButton.style.display = "flex";
-    clearInterval(timer);
-    timerCount = 60;
  };
 
  function showHighScoresList () {

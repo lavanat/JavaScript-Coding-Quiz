@@ -11,8 +11,8 @@ You can use this page to quiz yourself on the basics of JavaScript.
 
 ## Link to Deployed Application
 
-https://lavanat.github.io/
+https://lavanat.github.io/JavaScript-Coding-Quiz/
 
 ## Screenshot of Deployed Application
-![Screenshot of JavaScript Quiz]()
+![Screenshot of JavaScript Quiz](./Screenshot.png)
 

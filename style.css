@@ -16,6 +16,7 @@ header {
 }
 h1, #info {
     text-align: center;
+    justify-content: center;
 }
 
 main {
@@ -27,6 +28,10 @@ main {
 #center-content {
     margin: 50px;
     margin-top: 0px;
+}
+
+ul {
+    flex-direction: column;
 }
 
 #question-container {
@@ -52,6 +57,12 @@ button {
 #high-scores-container {
     justify-content: flex-start;
     margin-left: 20px;
+    width: fit-content;
+}
+
+#win-text {
+    justify-content: center;
+    flex-direction: column;
 }
 
 #timer-container {

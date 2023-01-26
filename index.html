@@ -13,7 +13,7 @@
     </header>
 
     <main>
-
+      <!-- Click the button to display stored high scores -->
      <section id="high-scores-container">
         <button id="high-score-button">View High Scores</button>
         <ul id="high-scores-list">
@@ -22,13 +22,7 @@
      </section>
 
      <div id="center-content">
-      <p id="info">
-        In this quiz, you will be presented with multiple choice questions.
-        Try to choose the correct answer within the time limit.
-        Choosing an incorrect answer will deduct 10 seconds from the timer.
-        Click the start button to begin! 
-      </p>
-
+      <!-- Shell container that will get updated with the question and answers -->
       <section id="question-container">
           <h2 id="question">Question</h2>
           <div id="answer-container">
@@ -38,15 +32,22 @@
             <button id="answer4">4</button>
           </div>
       </section>
-
+      <!-- This section changes to display whether the selected answer choice was right or wrong -->
+      <p id="info">
+        In this quiz, you will be presented with multiple choice questions.
+        Try to choose the correct answer within the time limit.
+        Choosing an incorrect answer will deduct 10 seconds from the timer.
+        Click the start button to begin! 
+      </p>
+      <!-- Separate section to display the initials input -->
       <section id="win-text">
-        <p>"Game Over! Enter your initials below to save your score."</p>
+        <p>Game Over! Enter your initials below to save your score.</p>
         <p>Your Score: <span id=score></span></p>
         Initials: <input type="text" id="initials">
         <button id="submit"> Submit </button>
       </section>
     </div>
-
+    <!-- Timer section -->
      <section id="timer-container">
         <div id="timer-text">
             Time Remaining: <span id=countdown>60</span> seconds

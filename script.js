@@ -87,13 +87,14 @@ var message;
 var score;
 var storedHighScores;
 
+// Hide everything except for the quiz info to start
 function init () {
     infoEl.style.display = "flex";
     questioncontainer.style.display = "none";
     wincontainer.style.display = "none";
     highScoresListEl.style.display = "none"
 }
-
+// Hide everything except for the question container, start the timer, and make sure to start back at the first question
 function startQuiz () {
     infoEl.style.display = "none";
     startButton.style.display = "none";
@@ -105,6 +106,7 @@ function startQuiz () {
     getQuestion ();
 }
 
+// timer function
 function startTimer () {
     timer = setInterval (function () {
         if (timerCount >0) {
@@ -119,7 +121,7 @@ function startTimer () {
         }
     }, 1000);
 }
-
+// prints the question to the screen
 function getQuestion () {
         questionEl.textContent = quizQuestions[nextQuestion].title;
         answer1El.textContent = quizQuestions[nextQuestion].answers[0];
@@ -128,13 +130,16 @@ function getQuestion () {
         answer4El.textContent = quizQuestions[nextQuestion].answers[3];
     }
 
+// Get the id of the button the user clicked and then compare it the correct answer. Print a message to the screen of whether it's right or not
 function checkAnswer () {
      var userAnswer = this.id;
     //  check if the answer is right or wrong
      if (quizQuestions[nextQuestion].correct === userAnswer) {
         message = "Correct Answer!";
+        infoEl.style.color = "green"
      } else {
         message = "Wrong Answer!"
+        infoEl.style.color = "red"
         timerCount = timerCount - 10;
      }
     //  go to high scores if this is the last question and there is time remaining
@@ -147,9 +152,13 @@ function checkAnswer () {
      getQuestion();
      infoEl.textContent = message;
      infoEl.style.display = "flex";
+     setTimeout(() => {
+        infoEl.style.display = "none";
+      }, 500);
      }
  }
 
+//  Display the Win container text and initials input. When the user clicks submit, save the score
  function displayScoreText () {
     infoEl.style.display = "none";
     questioncontainer.style.display = "none";
@@ -158,6 +167,7 @@ function checkAnswer () {
     submitButton.addEventListener("click", saveScore)
  }
 
+//  Save the score to local storage and display the high scores list
  function saveScore () {
     submitButton.disabled = true;
     userInitials = initialEl.value;
@@ -168,10 +178,12 @@ function checkAnswer () {
     showHighScoresList ();
     initialEl.value = "";
     timerCount = 60;
-    infoEl.textContent = "Hit start if you want to play again!"
+    infoEl.textContent = "Hit start if you want to play again!";
+    infoEl.style.color = "black";
     infoEl.style.display = "flex";
  };
 
+//  Show high scores either when the submit button is clicked or when someone clicks the View High Scores button
  function showHighScoresList () {
     if (highScoresListEl.style.display === "flex") {
         highScoresListEl.style.display = "none"
@@ -194,6 +206,7 @@ function checkAnswer () {
     }
  }
 
+//  Initialize the quiz and add event listeners for the buttons
  init ();
 startButton.addEventListener("click", startQuiz);
 answer1El.addEventListener("click", checkAnswer);
